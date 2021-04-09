@@ -97,3 +97,4 @@ https://github.com/moby/moby/issues/15717#issuecomment-493854811
 
 - [ ] GPU support
 - [ ] automatic build on Github Actions
+- [ ] use Tensorflow wheels from https://github.com/tensorflow/tensorflow#community-supported-builds
