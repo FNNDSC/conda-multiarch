@@ -11,8 +11,8 @@ WORKDIR /tmp
 
 ARG CONDA_VERSION=py39_4.10.3
 
-RUN curl -so install-conda.sh \
-    https://repo.anaconda.com/miniconda/Miniconda3-_${CONDA_VERSION}-$(uname -s)-$(uname -m).sh
+RUN curl -fso install-conda.sh \
+    https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-$(uname -s)-$(uname -m).sh
 RUN bash install-conda.sh -b -p /opt/conda
 
 ARG PYTHON_VERSION=3.10.2
