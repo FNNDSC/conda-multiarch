@@ -15,20 +15,45 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        #    BASE IMAGE                                   PLATFORMS                               TAGS
-        #    ----------                                   ---------                               ----
-          - 'debian:buster                                linux/amd64,linux/arm64,linux/ppc64le   docker.io/fnndsc/conda:python3.10.2'
-          - 'docker.io/fnndsc/civet:2.1.1                 linux/amd64,linux/ppc64le               docker.io/fnndsc/mni-conda-base:python3.10.2'
-          - 'nvcr.io/nvidia/cuda:10.1-base-ubuntu18.04    linux/amd64,linux/ppc64le               docker.io/fnndsc/conda:python3.10.2-cuda10.1'
-          - 'nvcr.io/nvidia/cuda:11.6.0-base-ubuntu20.04  linux/amd64,linux/arm64                 docker.io/fnndsc/conda:python3.10.2-cuda11.6.0'
+          - debian
+          - civet
+          - cuda10.1
+          - cuda11.6.0
           # maybe we want to throw in a tensorflow image?
     steps:
       - name: Get config
         id: config
         run: |
-          echo "::set-output name=base_image::$(awk '{print $1}' <<< "${{ matrix.config }}")"
-          echo "::set-output name=platforms::$(awk '{print $2}' <<< "${{ matrix.config }}")"
-          echo "::set-output name=tags::$(awk '{print $3}' <<< "${{ matrix.config }}")"
+          case "${{ matrix.profile }}" in
+            debian)
+              base_image="debian:buster"
+              platforms="linux/amd64,linux/arm64,linux/ppc64le"
+              tags="docker.io/fnndsc/conda:python3.10.2"
+              ;;
+            civet)
+              base_image="docker.io/fnndsc/civet:2.1.1"
+              platforms="linux/amd64,linux/ppc64le"
+              tags="docker.io/fnndsc/mni-conda-base:python3.10.2"
+              ;;
+            cuda10.1)
+              base_image="nvcr.io/nvidia/cuda:10.1-base-ubuntu18.04"
+              platforms="linux/amd64,linux/ppc64le"
+              tags="docker.io/fnndsc/conda:python3.10.2-cuda10.1"
+              ;;
+            cuda11.6.0)
+              base_image="nvcr.io/nvidia/cuda:11.6.0-base-ubuntu20.04"
+              platforms="linux/amd64,linux/arm64"
+              tags="docker.io/fnndsc/conda:python3.10.2-cuda11.6.0"
+              ;;
+            *)
+              echo "::error ::No configuration for profile '${{ matrix.profile }}'"
+              exit 1
+              ;;
+          esac
+
+          echo "::set-output name=base_image::$base_image""
+          echo "::set-output name=platforms::$platforms""
+          echo "::set-output name=tags::$tags"
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
       - name: Cache Docker layers
