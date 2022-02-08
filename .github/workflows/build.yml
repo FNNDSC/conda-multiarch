@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        config:
+        profile:
           - debian
           - civet
           - cuda10.1
