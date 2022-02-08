@@ -1,0 +1,55 @@
+name: build
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'Dockerfile'
+      - '.github/**'
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config:
+        #    BASE IMAGE                                   PLATFORMS                               TAGS
+        #    ----------                                   ---------                               ----
+          - 'debian:buster                                linux/amd64,linux/arm64,linux/ppc64le   docker.io/fnndsc/conda:python3.10.2'
+          - 'docker.io/fnndsc/civet:2.1.1                 linux/amd64,linux/ppc64le               docker.io/fnndsc/mni-conda-base:python3.10.2'
+          - 'nvcr.io/nvidia/cuda:10.1-base-ubuntu18.04    linux/amd64,linux/ppc64le               docker.io/fnndsc/conda:python3.10.2-cuda10.1'
+          - 'nvcr.io/nvidia/cuda:11.6.0-base-ubuntu20.04  linux/amd64,linux/arm64                 docker.io/fnndsc/conda:python3.10.2-cuda11.6.0'
+          # maybe we want to throw in a tensorflow image?
+    steps:
+      - name: Get config
+        id: config
+        run: |
+          echo "::set-output name=base_image::$(awk '{print $1}' <<< "${{ matrix.config }}")"
+          echo "::set-output name=platforms::$(awk '{print $2}' <<< "${{ matrix.config }}")"
+          echo "::set-output name=tags::$(awk '{print $3}' <<< "${{ matrix.config }}")"
+      - uses: docker/setup-qemu-action@v1
+      - uses: docker/setup-buildx-action@v1
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      - name: Login to DockerHub
+        id: dockerhub_login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          tags: ${{ steps.config.outputs.tags }}
+          platforms: ${{ steps.config.outputs.platforms }}
+          build-args:
+            - BASE=${{ steps.config.outputs.base_image }}
+          push: true
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
