@@ -5,3 +5,6 @@
 Various recipes providing images containing Conda,
 suitable as base images for building multi-architectural
 _ChRIS_ plugins.
+
+- multi-arch conda, optionally with [CUDA](https://en.wikipedia.org/wiki/CUDA): https://hub.docker.com/r/fnndsc/conda
+- with [CIVET-2.1.1](https://github.com/FNNDSC/CIVET_Full_Project): https://hub.docker.com/r/fnndsc/mni-conda-base
