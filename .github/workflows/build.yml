@@ -28,7 +28,7 @@ jobs:
             debian)
               base_image="debian:buster"
               platforms="linux/amd64,linux/arm64,linux/ppc64le"
-              tags="docker.io/fnndsc/conda:python3.10.2"
+              tags="docker.io/fnndsc/conda:python3.10.2,docker.io/fnndsc/conda:latest"
               ;;
             civet)
               base_image="docker.io/fnndsc/civet:2.1.1"
