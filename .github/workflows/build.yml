@@ -48,8 +48,7 @@ jobs:
         with:
           tags: ${{ steps.config.outputs.tags }}
           platforms: ${{ steps.config.outputs.platforms }}
-          build-args:
-            - BASE=${{ steps.config.outputs.base_image }}
+          build-args: BASE=${{ steps.config.outputs.base_image }}
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
