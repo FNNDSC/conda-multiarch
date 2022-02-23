@@ -32,7 +32,7 @@ jobs:
               ;;
             civet)
               base_image="docker.io/fnndsc/civet:2.1.1"
-              platforms="linux/amd64,linux/ppc64le"
+              platforms="linux/amd64,linux/arm64,linux/ppc64le"
               tags="docker.io/fnndsc/mni-conda-base:civet2.1.1-python3.10.2,docker.io/fnndsc/mni-conda-base:python3.10.2"
               ;;
             cuda10.1)
