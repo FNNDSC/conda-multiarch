@@ -15,7 +15,7 @@ RUN curl -fso install-conda.sh \
     https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-$(uname -s)-$(uname -m).sh
 RUN bash install-conda.sh -b -p /opt/conda
 
-ARG PYTHON_VERSION=3.10.5
+ARG PYTHON_VERSION=3.10.4
 RUN /opt/conda/bin/conda install -c conda-forge -y python=${PYTHON_VERSION}
 
 FROM base
