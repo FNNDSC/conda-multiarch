@@ -18,7 +18,6 @@ jobs:
           - { base_image: "debian:buster"                                 , platforms: "linux/amd64,linux/arm64,linux/ppc64le" , tags: "docker.io/fnndsc/conda:python3.10.4,docker.io/fnndsc/conda:latest" }
           - { base_image: "docker.io/fnndsc/civet:2.1.1"                  , platforms: "linux/amd64,linux/arm64,linux/ppc64le" , tags: "docker.io/fnndsc/mni-conda-base:civet2.1.1-python3.10.4,docker.io/fnndsc/mni-conda-base:python3.10.4" }
           - { base_image: "docker.io/fnndsc/civet:unofficial"             , platforms: "linux/amd64,linux/arm64,linux/ppc64le" , tags: "docker.io/fnndsc/mni-conda-base:unofficial" }
-          - { base_image: "nvcr.io/nvidia/cuda:10.1-base-ubuntu18.04"     , platforms: "linux/amd64,linux/ppc64le"             , tags: "docker.io/fnndsc/conda:python3.10.4-cuda10.1" }
           - { base_image: "nvcr.io/nvidia/cuda:11.6.0-base-ubuntu20.04"   , platforms: "linux/amd64,linux/arm64"               , tags: "docker.io/fnndsc/conda:python3.10.4-cuda11.6.0" }
     steps:
       - uses: docker/setup-qemu-action@v1
