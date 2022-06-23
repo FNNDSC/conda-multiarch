@@ -1,7 +1,7 @@
 # fyi, alpine doesn't work.
 # install-conda.sh: line 412: /opt/conda/conda.exe: No such file or directory
 
-ARG BASE=debian:buster
+ARG BASE=debian:bullseye
 FROM ${BASE} as base
 FROM base as installer
 
