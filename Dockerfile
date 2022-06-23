@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y curl
 
 WORKDIR /tmp
 
-ARG CONDA_VERSION=py39_4.10.3
+ARG CONDA_VERSION=py39_4.12.0
 
 RUN curl -fso install-conda.sh \
     https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-$(uname -s)-$(uname -m).sh
