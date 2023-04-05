@@ -15,9 +15,8 @@ jobs:
       fail-fast: false
       matrix:
         profile:
-          - { base_image: "debian:bullseye"                               , platforms: "linux/amd64,linux/arm64,linux/ppc64le" , tags: "docker.io/fnndsc/conda:python3.11.0,docker.io/fnndsc/conda:latest" }
-          - { base_image: "docker.io/fnndsc/civet:2.1.1"                  , platforms: "linux/amd64,linux/arm64,linux/ppc64le" , tags: "docker.io/fnndsc/mni-conda-base:civet2.1.1-python3.11.0,docker.io/fnndsc/mni-conda-base:python3.11.0" }
-          - { base_image: "nvcr.io/nvidia/cuda:11.6.0-base-ubuntu20.04"   , platforms: "linux/amd64,linux/arm64"               , tags: "docker.io/fnndsc/conda:python3.11.0-cuda11.6.0" }
+          - { base_image: "debian:bullseye"                               , platforms: "linux/amd64,linux/arm64,linux/ppc64le" , tags: "docker.io/fnndsc/conda:python3.11.2,docker.io/fnndsc/conda:latest" }
+          - { base_image: "nvcr.io/nvidia/cuda:12.1.0-base-ubuntu20.04"   , platforms: "linux/amd64,linux/arm64"               , tags: "docker.io/fnndsc/conda:python3.11.2-cuda12.1.0" }
     steps:
       - uses: docker/setup-qemu-action@v2
       - uses: docker/setup-buildx-action@v2
